@@ -16,6 +16,10 @@ class Task
 
         void to_run()
         {
+            if (!_sensor) //guard against nullptr constructor
+            {
+                return; 
+            }
             auto next = std::chrono::steady_clock::now();
             const auto period = std::chrono::milliseconds(_dt);
             while(_running)
@@ -35,10 +39,6 @@ class Task
         }
         void run()
         {
-            if (!_sensor) //guard against nullptr constructor
-            {
-                return; 
-            }
             if (_thread.joinable()) 
             {    
                 return;
