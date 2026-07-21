@@ -18,15 +18,15 @@ int main()
 
     Temperature temp1(25);
     auto Task2 = std::make_unique<Task> (&temp1, 15);
-    Task2 ->run();
+    Task2 -> run();
     
     Pressure press1(37);
     auto Task3 = std::make_unique<Task> (&press1, 20);
-    Task3 ->run();
+    Task3 -> run();
     
     mA mA1(98);
     auto Task4 = std::make_unique<Task> (&mA1, 35);
-    Task4 ->run();
+    Task4 -> run();
 
     while (true) std::this_thread::sleep_for(std::chrono::seconds(1));
 }
