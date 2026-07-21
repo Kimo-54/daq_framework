@@ -16,10 +16,13 @@ class Task
 
         void to_run()
         {
+            auto next = std::chrono::steady_clock::now();
+            const auto period = std::chrono::milliseconds(_dt);
             while(_running)
             {
                 _sensor ->read();
-                std::this_thread::sleep_for(std::chrono::milliseconds(_dt));
+                next += period;
+                std::this_thread::sleep_until(next);
             }
         }
 
