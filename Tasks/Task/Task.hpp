@@ -12,7 +12,7 @@ class Task
         int _dt {10};
         Sensor* _sensor;
         std::thread _thread;
-        std::atomic<bool> _running{false};
+        std::atomic<bool> _running {false};
 
         void to_run()
         {
