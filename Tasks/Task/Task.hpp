@@ -57,10 +57,7 @@ class Task
         void stop()
             {
                 _running = false;
-                if (_thread.joinable())
-                {
-                    _thread.join();
-                }
+                join();
             }
             
         Task(const Task&) = delete;
