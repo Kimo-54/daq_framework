@@ -24,7 +24,7 @@ class Task
             const auto period = std::chrono::milliseconds(_dt);
             while(_running)
             {
-                _sensor ->read();
+                _sensor -> read();
                 next += period;
                 std::this_thread::sleep_until(next);
             }
