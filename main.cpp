@@ -1,11 +1,9 @@
-
 #include "Tasks/Task/Task.hpp"
 #include "Tasks/Task/ExTask.hpp"
 #include "Tasks/Sensors/Sensor.hpp"
 #include "Tasks/Sensors/Temperature.hpp"
 #include "Tasks/Sensors/Pressure.hpp"
 #include "Tasks/Sensors/mA.hpp"
-
 
 int main()
 {
