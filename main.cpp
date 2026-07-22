@@ -26,5 +26,17 @@ int main()
     auto Task4 = std::make_unique<Task> (&mA1, 35);
     Task4 -> run();
 
+    Temperature temp2(1125);
+    auto Task5 = std::make_unique<Task> (&temp2, 15);
+    Task5 -> run();
+    
+    Pressure press2(1137);
+    auto Task6 = std::make_unique<Task> (&press2, 20);
+    Task6 -> run();
+    
+    mA mA2(1198);
+    auto Task7 = std::make_unique<Task> (&mA2, 35);
+    Task7 -> run();
+    
     while (true) std::this_thread::sleep_for(std::chrono::seconds(1));
 }
