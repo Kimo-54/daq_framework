@@ -14,54 +14,55 @@ class Task
         std::thread _thread;
         std::atomic<bool> _running {false};
 
+    protected:
         void to_run()
-        {
-            if (!_sensor) //guard against nullptr constructor
             {
-                return; 
+                if (!_sensor) //guard against nullptr constructor
+                {
+                    return; 
+                }
+                auto next = std::chrono::steady_clock::now();
+                const auto period = std::chrono::milliseconds(_dt);
+                while(_running)
+                {
+                    _sensor -> read();
+                    next += period;
+                    std::this_thread::sleep_until(next);
+                }
             }
-            auto next = std::chrono::steady_clock::now();
-            const auto period = std::chrono::milliseconds(_dt);
-            while(_running)
+        void join()
             {
-                _sensor -> read();
-                next += period;
-                std::this_thread::sleep_until(next);
+                if (_thread.joinable())
+                {
+                    _thread.join();
+                }
             }
-        }
-
     public:
+    
         Task() : _sensor(nullptr) {} //to be able to inherit from Task
         Task (Sensor *sensor, int dt) : _dt(dt), _sensor(sensor) {}
         ~Task()
-        {
-            stop();
-        }
+            {
+                stop();
+            }
         void run()
-        {
-            if (_thread.joinable()) 
-            {    
-                return;
+            {
+                if (_thread.joinable()) 
+                {    
+                    return;
+                }
+                    _running = true;
+                _thread = std::thread(&Task::to_run, this);
             }
-            _running = true;
-            _thread = std::thread(&Task::to_run, this);
-        }
         void stop()
-        {
-            _running = false;
-            if (_thread.joinable())
             {
-                _thread.join();
+                _running = false;
+                if (_thread.joinable())
+                {
+                    _thread.join();
+                }
             }
-        }
-        void join()
-        {
-            if (_thread.joinable())
-            {
-                _thread.join();
-            }
-        }
-        
+            
         Task(const Task&) = delete;
         Task& operator=(const Task&) = delete;
 };
