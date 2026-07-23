@@ -6,16 +6,6 @@
 
 class Task
 {
-    private:
-        std::thread _thread;
-
-    protected:
-        Task() = default;
-
-        virtual void to_run() = 0; //the one thing derived classes have to provide, loops until _running is false
-
-        std::atomic<bool> _running {false};
-
     public:
         virtual ~Task()
         {
@@ -57,4 +47,14 @@ class Task
 
         Task(const Task&) = delete;
         Task& operator=(const Task&) = delete;
+
+    protected:
+        Task() = default;
+
+        virtual void to_run() = 0; //the one thing derived classes have to provide, loops until _running is false
+        
+        std::atomic<bool> _running {false};
+    
+    private:
+        std::thread _thread;
 };

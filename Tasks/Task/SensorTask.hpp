@@ -10,32 +10,31 @@
 
 class SensorTask : public Task
 {
+    public:
+        SensorTask() = delete;
+        SensorTask (Sensor* sensor, int dt) : _sensor(sensor), _dt(dt)
+        {
+            assert (_sensor && "SensorTask requires non-null sensor");
+        }
+        ~SensorTask() override
+        {
+            stop(); // stop before _sensor becomes dangling
+        }
+        
+    protected:
+        void to_run() override
+        {
+            auto next = std::chrono::steady_clock::now();
+            const auto period = std::chrono::milliseconds(_dt);
+            
+            while (_running)
+            {
+                _sensor -> read();
+                next += period;
+                std::this_thread::sleep_until(next);
+            }
+        }
     private:
         Sensor* _sensor;
         int _dt {10};
-
-        protected:
-            void to_run() override
-            {
-                auto next = std::chrono::steady_clock::now();
-                const auto period = std::chrono::milliseconds(_dt);
-                
-                while (_running)
-                {
-                    _sensor -> read();
-                    next += period;
-                    std::this_thread::sleep_until(next);
-                }
-            }
-        
-        public:
-            SensorTask() = delete;
-            SensorTask (Sensor* sensor, int dt) : _sensor(sensor), _dt(dt)
-            {
-                assert (_sensor && "SensorTask requires non-null sensor");
-            }
-            ~SensorTask() override
-            {
-                stop(); // stop before _sensor becomes dangling
-            }
 };
