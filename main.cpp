@@ -1,4 +1,5 @@
 #include "Tasks/Task/Task.hpp"
+#include "Tasks/Task/SensorTask.hpp"
 #include "Tasks/Task/ExTask.hpp"
 #include "Tasks/Sensors/Sensor.hpp"
 #include "Tasks/Sensors/Temperature.hpp"
@@ -15,27 +16,27 @@ int main()
     // Task1 -> run_vector();
 
     Temperature temp1(25);
-    auto Task2 = std::make_unique<Task> (&temp1, 370);
+    auto Task2 = std::make_unique<SensorTask> (&temp1, 70);
     Task2 -> run();
     
     Pressure press1(37);
-    auto Task3 = std::make_unique<Task> (&press1, 280);
+    auto Task3 = std::make_unique<SensorTask> (&press1, 80);
     Task3 -> run();
     
     mA mA1(98);
-    auto Task4 = std::make_unique<Task> (&mA1, 420);
+    auto Task4 = std::make_unique<SensorTask> (&mA1, 20);
     Task4 -> run();
 
-    Temperature temp2(1125);
-    auto Task5 = std::make_unique<Task> (&temp2, 310);
+    Temperature temp2(125);
+    auto Task5 = std::make_unique<SensorTask> (&temp2, 10);
     Task5 -> run();
     
-    Pressure press2(1137);
-    auto Task6 = std::make_unique<Task> (&press2, 450);
+    Pressure press2(137);
+    auto Task6 = std::make_unique<SensorTask> (&press2, 50);
     Task6 -> run();
     
-    mA mA2(1198);
-    auto Task7 = std::make_unique<Task> (&mA2, 260);
+    mA mA2(198);
+    auto Task7 = std::make_unique<SensorTask> (&mA2, 60);
     Task7 -> run();
     
     while (true) std::this_thread::sleep_for(std::chrono::seconds(1));
