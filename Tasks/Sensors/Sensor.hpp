@@ -7,11 +7,11 @@
 class Sensor {
 public:
     Sensor (int id) : id_(id){}
-    virtual void read() const = 0;   // virtual is the key
     virtual ~Sensor() = default;      // virtual dtor so delete works right
+    virtual void read() = 0;   // virtual is the key
 
     int id() const { return id_; }
 
 protected:
-int id_;
+    int id_;
 };

@@ -5,6 +5,6 @@
 class Temperature : public Sensor {
 public:
     Temperature (int id) : Sensor (id) {}
-    void read() const override { std::cout << "Temperature id = " <<id_ << "\n"; }
+    void read() override { std::cout << "Temperature id = " <<id_ << std::endl; }
     
 };
