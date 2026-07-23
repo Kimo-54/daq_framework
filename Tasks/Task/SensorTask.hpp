@@ -3,6 +3,7 @@
 #include <thread>
 #include <atomic>
 #include <chrono>
+#include <cassert>
 
 #include "Task.hpp"
 #include "../Sensors/Sensor.hpp"
@@ -18,6 +19,7 @@ class SensorTask : public Task
             {
                 auto next = std::chrono::steady_clock::now();
                 const auto period = std::chrono::milliseconds(_dt);
+                
                 while (_running)
                 {
                     _sensor -> read();
@@ -28,7 +30,10 @@ class SensorTask : public Task
         
         public:
             SensorTask() = delete;
-            SensorTask (Sensor* sensor, int dt) : _sensor(sensor), _dt(dt) {}
+            SensorTask (Sensor* sensor, int dt) : _sensor(sensor), _dt(dt)
+            {
+                assert (_sensor && "SensorTask requires non-null sensor");
+            }
             ~SensorTask() override
             {
                 stop(); // stop before _sensor becomes dangling
