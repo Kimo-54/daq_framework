@@ -13,19 +13,18 @@ class SensorTask : public Task
         Sensor* _sensor;
         int _dt {10};
 
-        void to_run() override
-        {
-            auto next = std::chrono::steady_clock::now();
-            const auto period = std::chrono::milliseconds(_dt);
-            while (_running)
-            {
-                _sensor -> read();
-                next += period;
-                std::this_thread::sleep_until(next);
-            }
-        }
-        
         protected:
+            void to_run() override
+            {
+                auto next = std::chrono::steady_clock::now();
+                const auto period = std::chrono::milliseconds(_dt);
+                while (_running)
+                {
+                    _sensor -> read();
+                    next += period;
+                    std::this_thread::sleep_until(next);
+                }
+            }
         
         public:
             SensorTask() = delete;
