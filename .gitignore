@@ -1,3 +1,4 @@
 # ignore executables
 *.exe
 main
+*.out
